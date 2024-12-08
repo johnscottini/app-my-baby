@@ -1,9 +1,11 @@
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
 import { Card, Fab, Grid, Typography } from '..';
+import { useAppContext } from '../../Context';
 
 const CardNewItemComponent = ({ Icon, color, title, actionType }) => {
     const navigate = useNavigate();
+    const { translate } = useAppContext();
 
     return (
         <Card
@@ -58,7 +60,7 @@ const CardNewItemComponent = ({ Icon, color, title, actionType }) => {
                         color: "#6c757d",
                     }}
                 >
-                    Adicione algo
+                    {translate('add-new-action')}
                 </Typography>
             </Grid>
             <Grid

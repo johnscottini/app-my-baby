@@ -8,7 +8,6 @@ import { adjustDateTimeForTimezone } from "../utils/core";
 import { getBabyInfo } from "../services/database";
 import dayjs from "dayjs";
 
-
 const Settings: React.FC = () => {
     const { translate, changeLanguage, showAlertMessage, supabase } = useAppContext();
 
@@ -44,7 +43,6 @@ const Settings: React.FC = () => {
         showAlertMessage(translate("form-saved"), "success");
     };
 
-    // Função de Logout
     const handleLogout = async () => {
         try {
             await supabase.auth.signOut();

@@ -36,7 +36,7 @@ const AppBarComponent = ({...props}) => {
                 </Typography>
                 {
                     props.id ?   <Box sx={{ 
-                                        display: { xs: 'flex', md: 'none' },
+                                        display: { xs: 'flex' },
                                         position: 'absolute',
                                         right: '1.5em'    
                                     }}>

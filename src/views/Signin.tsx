@@ -8,7 +8,7 @@ import { handleChange } from "../utils/core";
 
 const SignIn: React.FC = () => {
     const navigate = useNavigate();
-    const { showSnackMessage, showAlertMessage, supabase, translate } = useAppContext();
+    const { showSnackMessage, supabase, translate } = useAppContext();
     const [data, setData] = useState({
         email: {
             value: "",
@@ -20,101 +20,71 @@ const SignIn: React.FC = () => {
             error: null,
             helperText: null
         },
-    })
+    });
 
     const verifyLogin = async () => {
         let { data: response, error } = await signIn(data.email.value, data.password.value, supabase);
 
-        if (error && error.message === "Invalid login credentials"){
+        if (error && error.message === "Invalid login credentials") {
             showSnackMessage("Dados de usuário inválidos");
         } else {
             localStorage.setItem("session", JSON.stringify(response.session));
             localStorage.setItem("user", JSON.stringify(response.user));
             navigate("/");
         }
-    }
+    };
 
-    return  <Box
+    return (
+        <Box sx={{ height: '100vh', width: '100vw', display: 'flex' }}>
+            {/* Esquerda */}
+            <Box
                 sx={{
-                    height: '100vh',
-                    paddingTop: 8
+                    flex: 1,
+                    backgroundColor: '#f5f5f5',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                 }}
             >
-                <Grid 
-                    sx={styles.boxAdjustment}
-                    container={true}>
-                    <Grid 
-                        sx={styles.centerBox}
-                        item={true} size={{xs: 12}}>
-                        <Avatar
-                            sx={{ width: 180, height: 180 }}
-                            src={logo}
-                        />
-                    </Grid>
-                    <Grid 
-                        sx={{
-                            ...styles.centerBox,
-                            ...styles.marginTop
-                        }}
-                        item={true} size={{xs: 12}}>
-                        <Typography variant="h3">Login</Typography>
-                    </Grid>
-                    <Grid 
-                        sx={styles.centerBox}
-                        item={true} size={{xs: 12}}>
-                        <Typography variant="h5">{translate('welcome')}</Typography>
-                    </Grid>
-                    <Grid 
-                        sx={styles.marginTop}
-                        item={true} size={{xs: 12}}>
-                        <TextField
-                            label="E-mail"
-                            fullWidth={true}
-                            onChange={(event) => handleChange(data, setData, event.target.value, "email")}
-                            value={data.email.value}
-                        />
-                    </Grid>
-                    <Grid 
-                        sx={styles.marginTop}
-                        item={true} size={{xs: 12}}>
-                        <TextField
-                            label="Senha"
-                            fullWidth={true}
-                            onChange={(event) => handleChange(data, setData, event.target.value, "password")}
-                            type="password"
-                            value={data.password.value}/>
-                    </Grid>
-                    <Grid 
-                        sx={{
-                            ...styles.centerBox,
-                            ...styles.marginTop
-                        }}
-                        item={true} size={{xs: 12}}>
-                        <Link to="/signup">Cadastrar</Link>
-                    </Grid>
-                    <Grid 
-                        sx={styles.marginTop}
-                        item={true} size={{xs: 12}}>
-                        <Button 
-                            fullWidth={true}
-                            onClick={verifyLogin}>Entrar</Button>
-                    </Grid>
-                </Grid>
+                <Avatar sx={{ width: 160, height: 160 }} src={logo} />
+                <Typography variant="h3" sx={{ marginTop: 2 }}>Login</Typography>
+                <Typography variant="h5" sx={{ marginTop: 1 }}>{translate('welcome')}</Typography>
             </Box>
-};
 
-const styles = {
-    centerBox: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    boxAdjustment: {
-        padding: 2
-    },
-    marginTop: {
-        marginTop: 4
-    }
-}
+            {/* Direita */}
+            <Box
+                sx={{
+                    flex: 1,
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    padding: 3,
+                }}
+            >
+                <TextField
+                    label="E-mail"
+                    fullWidth
+                    onChange={(event) => handleChange(data, setData, event.target.value, "email")}
+                    value={data.email.value}
+                    sx={{ marginBottom: 2 }}
+                />
+                <TextField
+                    label="Senha"
+                    fullWidth
+                    onChange={(event) => handleChange(data, setData, event.target.value, "password")}
+                    type="password"
+                    value={data.password.value}
+                    sx={{ marginBottom: 2 }}
+                />
+                <Link to="/signup" style={{ marginBottom: 2, textAlign: 'center' }}>Cadastrar</Link>
+                <Button fullWidth onClick={verifyLogin}  style={{ marginTop: 15 }} variant="contained" color="primary">
+                    Entrar
+                </Button>
+            </Box>
+        </Box>
+    );
+};
 
 export default SignIn;
